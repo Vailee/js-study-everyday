@@ -17,8 +17,15 @@ const Promise=require('./1.myPromise.js')
 let p = new Promise((resolve, reject) => {
   // throw new Error('失败了')
   console.log(1);
-  // resolve(123)
-  reject(123)
+  setTimeout(() => {
+    resolve(123)
+  }, 1000);
+  // reject(123)
+})
+p.then((data) => {
+  console.log('success',data);
+}, (reason) => {
+  console.log('fail',reason);
 })
 p.then((data) => {
   console.log('success',data);
