@@ -13,6 +13,7 @@ function resolvePromise(x, promise2, resolve, reject) {
   // 不是promise 就直接调用
   // console.log(x, promise2, resolve, reject);
   if ((typeof x === 'object' && x !== null) || typeof x === 'function') {
+    let called //用于容错处理
     try {
       // x可以是一个对象或者函数
       let then = x.then // 就看一下这个对象是否有then方法
@@ -20,14 +21,21 @@ function resolvePromise(x, promise2, resolve, reject) {
         // then是函数 x是一个promise
         // 如果x是promise ，那么就采用他的状态
         then.call(x, function(y) { // 调用返回的promise 用他的结果作为下一次then的结果
-          resolve(y)
+          if (called) return
+          called = true
+          // 递归解析成功后的值
+          resolvePromise(y, promise2, resolve, reject)
         }, function(r) {
+          if (called) return
+          called = true
           reject(r)
         })
       } else {
         resolve(x) // 此时x就是一个普通对象
       }
     } catch (error) {
+      if (called) return
+      called = true
       reject(error) // 取then时抛出错误
     }
 
