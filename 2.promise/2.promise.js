@@ -54,7 +54,13 @@ function read(...args) {
 
 read('./1.callback/test1.txt', 'utf8').then(data => {
   // return 100
-  throw new Error('err')
+  // throw new Error('err')
+  // 判断返回值和下一个then的关系
+  return new Promise((resolve, reject) => {
+    resolve({
+      name: 'zf'
+    })
+  })
 }, err => {
   console.log(err);
   return 200
