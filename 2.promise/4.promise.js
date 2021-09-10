@@ -1,4 +1,4 @@
-const Promise = require('./4.myPromise')
+// const Promise = require('./4.myPromise')
 const fs = require('fs')
 
 // function read(...args) {
@@ -26,9 +26,14 @@ const fs = require('fs')
 let p = new Promise((resole, reject) => {
   setTimeout(() => {
     resole('ok')
+    // reject('err')
   }, 1000);
 })
-// 可以等待一个Promise的执行
-Promise.resolve(p).then((data) => {
+// // 可以等待一个Promise的执行
+// Promise.resolve(p).then((data) => {
+//   console.log(data);
+// })
+
+Promise.reject(p).catch((data) => {
   console.log(data);
 })

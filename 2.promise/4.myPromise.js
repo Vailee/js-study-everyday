@@ -144,9 +144,17 @@ class Promise {
 
     return promise2
   }
+  catch (error) { // 默认没有成功只有失败
+    return this.then(null, error)
+  }
   static resolve(value) {
     return new Promise((resolve, reject) => {
       resolve(value)
+    })
+  }
+  static reject(reason) {
+    return new Promise((resolve, reject) => {
+      reject(reason)
     })
   }
 }
