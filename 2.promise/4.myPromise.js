@@ -51,6 +51,11 @@ class Promise {
     this.onResolvedCallbacks = [] // 存放成功的回调
     this.onRejectedCallbacks = [] // 存放失败的回调
     const resolve = (val) => {
+      // 传进来的val可能是promise
+      if (val instanceof Promise) { // 如果当前值是自己的Promise
+        return val.then(resolve, reject)
+      }
+
       if (this.state === STATUS.PENDING) {
         this.state = STATUS.FULFILLED
         this.value = val
@@ -138,6 +143,11 @@ class Promise {
     })
 
     return promise2
+  }
+  static resolve(value) {
+    return new Promise((resolve, reject) => {
+      resolve(value)
+    })
   }
 }
 
