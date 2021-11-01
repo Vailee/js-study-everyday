@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="file" id = 'avatar' />
+  <script>
+  //   let str = '<div>hello world</div>'
+  //   // 文件类型 可以存储文件内容 ,文件的所有内容
+  //  const blob =  new Blob([str],{
+  //    type:'text/html'
+  //  })
+
+  //   const a = document.createElement('a')
+  //   a.setAttribute('download','index.html')
+  //   a.href = URL.createObjectURL(blob)
+  //   URL.revokeObjectURL()
+  //   a.click()
+
+  // 前端H5实现二进制的读取
+  // formData 中运行放blob 给到服务器  后端操作的是二进制
+  avatar.addEventListener('change',(e)=>{
+    // file继承blob
+    let file = e.target.file[0]
+    // console.log(file);
+    //way1 把文件读出来
+    // let fileReader = new FileReader()
+    // fileReader.onload = function(){
+    //   let img = document.createElement('img')
+    //   img.src=fileReader.result
+    //   document.body.appendChild(img)
+    // }
+    // fileReader.readAsDataURL(file) //文件转换成base64
+    // way2 只获取base64展示 同步
+    let img = document.createElement('img')
+    let url = URL.createObjectURL(file)
+      img.src=url
+      document.body.appendChild(img)
+      URL.revokeObjectURL(url) //释放
+
+
+    
+  })
+const arrayBuffer = new ArrayBuffer(4); // 4 字节
+    console.log(arrayBuffer);
+  </script>
+</body>
+</html>

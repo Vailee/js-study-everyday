@@ -15,7 +15,7 @@
 // 根据不同平台操作系统文件
 // cwd current working directory
 // 获取当前执行node命令目录 可以找到当前目录下的某个文件
-// chdir 修改某个文件
+// chdir 修改某个文件到其他路径
 
 // env 当前系统的环境变量 根据不同的环境变量做配置
 // 设置环境变量 win set xxx = xxx / mac export xxx=xxx
@@ -35,12 +35,30 @@
 
 // commander 
 
-const program = require('commander') //解析用户传递的参数
-program.name('abcd')
-program.usage('[options]')
-program.createOption('rm', () => {
-  console.log('删除');
+// const program = require('commander') //解析用户传递的参数
+// program.name('abcd')
+// program.usage('[options]')
+// program.createOption('rm', () => {
+//   console.log('删除');
+// })
+// program.option('-p, --port <v>', 'set server port')
+// program.parse(process.argv)
+// console.log(program.port);
+
+// node中有多个红任务队列
+
+// process.nextTick() //微任务 
+// timers 定时器 
+// poll 轮询 会在特定的时候进行阻塞 执行i/o回调 fs
+// check setImmediate 每个宏任务执行完毕 都会清空微任务
+
+// 先清空栈底 process.nextTick() 清空微任务 进到宏任务
+setTimeout(() => { // 宏任务
+  console.log('timeout');
+}, 0);
+Promise.resolve().then(() => { //微任务
+  console.log('promise');
 })
-program.option('-p, --port <v>', 'set server port')
-program.parse(process.argv)
-console.log(program.port);
+process.nextTick(() => { // 微任务 当前执行栈中执行完毕后，立即调用的，比微任务级别高
+  console.log('nextTick');
+})
